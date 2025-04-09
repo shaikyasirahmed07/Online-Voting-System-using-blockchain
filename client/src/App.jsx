@@ -10,8 +10,17 @@ function App() {
   const [account, setAccount] = useState("");
   const [candidates, setCandidates] = useState([]);
   const [transactionPending, setTransactionPending] = useState(false);
+  const [theme, setTheme] = useState("light");
 
-  const contractAddress = "0x730f75e9743F46D68C2bb5dC299A076EABCe52E9";
+  const contractAddress = "0x952eF00340D615e06500D1ca4763EC073e950D4F";
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   useEffect(() => {
     const connectWallet = async () => {
@@ -66,20 +75,27 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <h1>Blockchain Voting DApp</h1>
-      <p>Connected Account: {account}</p>
-      <ul>
-        {candidates.map((candidate) => (
-          <li key={candidate.id}>
-            {candidate.name} - {candidate.votes} votes
-            <button disabled={transactionPending} onClick={() => voteForCandidate(candidate.id)}>
-              {transactionPending ? "Voting..." : "Vote"}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <button className="theme-toggle" onClick={toggleTheme}>
+        Switch to {theme === "light" ? "Dark" : "Light"} Mode
+      </button>
+      <div className="container">
+        <h1>Blockchain Voting DApp</h1>
+        <p>Connected Account: {account}</p>
+        <ul>
+          {candidates.map((candidate) => (
+            <li key={candidate.id}>
+              <span>
+                {candidate.name} - {candidate.votes} votes
+              </span>
+              <button disabled={transactionPending} onClick={() => voteForCandidate(candidate.id)}>
+                {transactionPending ? "Voting..." : "Vote"}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }
 
