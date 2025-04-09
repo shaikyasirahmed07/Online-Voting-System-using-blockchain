@@ -1,8 +1,8 @@
 :root {
   --bg-light: #f7f0ff;
   --bg-dark: #1e1e2f;
-  --card-light: #ffffff;
-  --card-dark: #2c2c3e;
+  --card-light: #ffffffcc; /* semi-transparent white */
+  --card-dark: #1f1f2ecc;  /* darker transparent for better Vanta contrast */
   --text-light: #333;
   --text-dark: #f5f5f5;
   --button-bg: #7f5af0;
@@ -11,13 +11,11 @@
 }
 
 [data-theme="light"] {
-  --bg: var(--bg-light);
   --card: var(--card-light);
   --text: var(--text-light);
 }
 
 [data-theme="dark"] {
-  --bg: var(--bg-dark);
   --card: var(--card-dark);
   --text: var(--text-dark);
 }
@@ -26,15 +24,22 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
-  min-height: 100vh;
+  overflow-x: hidden;
+}
+.vanta-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background 0.3s ease, color 0.3s ease;
+  z-index: 0;
+  overflow: hidden;
 }
-
 .container {
   width: 100%;
   max-width: 600px;
@@ -42,9 +47,13 @@ body {
   padding: 2rem;
   background: var(--card);
   border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  color: var(--text);
   text-align: center;
-  transition: background 0.3s ease;
+  z-index: 1;
+  position: relative;
+  backdrop-filter: blur(8px);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 h1 {
@@ -107,6 +116,7 @@ button:disabled {
   border-radius: 1rem;
   cursor: pointer;
   transition: background 0.3s ease;
+  z-index: 2;
 }
 
 .theme-toggle:hover {
@@ -131,5 +141,19 @@ button:disabled {
   button {
     margin-top: 0.5rem;
     width: 100%;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUpList 0.6s ease forwards;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeInUpList {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
