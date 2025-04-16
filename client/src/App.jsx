@@ -12,7 +12,7 @@ function App() {
   const vantaRef = useRef(null);
   const vantaEffectRef = useRef(null);
 
-  const contractAddress = "0xD76900D791409C46898A2370C16408625a0d612A";
+  const contractAddress = "0xYourDeployedContractAddress"; // <-- Replace this
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
