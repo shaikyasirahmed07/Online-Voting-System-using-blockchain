@@ -4,23 +4,17 @@ import Voting from "./artifacts/contracts/Voting.sol/Voting.json";
 import "./App.css";
 
 function App() {
+  const [provider, setProvider] = useState(null);
+  const [signer, setSigner] = useState(null);
   const [contract, setContract] = useState(null);
   const [account, setAccount] = useState("");
   const [candidates, setCandidates] = useState([]);
   const [transactionPending, setTransactionPending] = useState(false);
-  const [theme, setTheme] = useState("light");
+
+  const contractAddress = "0xDEB2ec2B957101065B848731C04C984Fcd5146cA";
+
   const vantaRef = useRef(null);
   const vantaEffectRef = useRef(null);
-
-  const contractAddress = "0xD76900D791409C46898A2370C16408625a0d612A";
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
 
   useEffect(() => {
     if (!vantaEffectRef.current && window.VANTA && window.VANTA.NET && vantaRef.current) {
@@ -58,6 +52,8 @@ function App() {
         const signer = await provider.getSigner();
         const contract = new ethers.Contract(contractAddress, Voting.abi, signer);
 
+        setProvider(provider);
+        setSigner(signer);
         setContract(contract);
         setAccount(accounts[0]);
 
@@ -100,22 +96,13 @@ function App() {
 
   return (
     <div ref={vantaRef} className="vanta-bg">
-      <button className="theme-toggle" onClick={toggleTheme}>
-        Switch to {theme === "light" ? "Dark" : "Light"} Mode
-      </button>
       <div className="container">
         <h1>Blockchain Voting DApp</h1>
         <p>Connected Account: {account}</p>
         <ul>
-          {candidates.map((candidate, index) => (
-            <li
-              key={candidate.id}
-              className="fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <span>
-                {candidate.name} - {candidate.votes} votes
-              </span>
+          {candidates.map((candidate) => (
+            <li key={candidate.id}>
+              {candidate.name} - {candidate.votes} votes
               <button
                 disabled={transactionPending}
                 onClick={() => voteForCandidate(candidate.id)}
