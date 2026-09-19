@@ -1,16 +1,8 @@
-# Sample Hardhat Project
+## System Architecture
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+The following diagram illustrates the architecture and flow of the blockchain-based online voting system:
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.js
-```
+```mermaid
 flowchart TD
 
 subgraph group_experience["User Experience"]
@@ -79,8 +71,38 @@ classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
 classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
 classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
 classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+
 class node_homepage,node_router,node_voting_ui,node_presentation toneBlue
 class node_ethers_client,node_contract_abi,node_candidate_state toneAmber
 class node_voting_contract,node_candidate_queries,node_vote_processing toneMint
 class node_evm_ledger,node_network_provider toneRose
 class node_voter,node_wallet toneIndigo
+
+
+### 2. Important: remove the outer code fence
+
+When putting it into your actual `README.md`, you need **exactly one** opening and closing fence around the Mermaid diagram:
+
+```markdown
+```mermaid
+flowchart TD
+...
+
+
+
+
+Don't put the Mermaid block inside another ` ```markdown ` block in the actual README.
+
+### 3. GitHub will render it automatically
+
+Because GitHub supports Mermaid diagrams in Markdown, after you commit and push the README, GitHub should render the flowchart rather than showing the Mermaid source.
+
+You can also put a nice heading above it:
+
+```markdown
+## 🏗️ System Architecture
+
+This diagram illustrates how the voter interacts with the frontend, MetaMask, the Web3 client, the Solidity voting contract, and the blockchain network.
+
+```mermaid
+...
