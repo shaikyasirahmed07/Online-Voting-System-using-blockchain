@@ -1,6 +1,31 @@
-## System Architecture
+# Online Voting System Using Blockchain
 
-The following diagram illustrates the architecture and flow of the blockchain-based online voting system:
+A blockchain-based online voting system built using **Solidity, Hardhat, React, Ethers.js, and MetaMask**.
+
+## 🚀 Features
+
+- Blockchain-based voting
+- Solidity smart contract
+- MetaMask wallet integration
+- React frontend
+- Ethers.js Web3 integration
+- Candidate vote counting
+- Real-time voting results
+- Decentralized vote storage
+
+## 🛠️ Technologies Used
+
+- **Frontend:** React.js
+- **Smart Contract:** Solidity
+- **Blockchain:** Ethereum / EVM
+- **Development Framework:** Hardhat
+- **Web3 Library:** Ethers.js
+- **Wallet:** MetaMask
+- **Version Control:** Git & GitHub
+
+## 🏗️ System Architecture
+
+The following diagram illustrates the architecture and flow of the blockchain-based online voting system.
 
 ```mermaid
 flowchart TD
@@ -35,22 +60,29 @@ node_wallet["MetaMask Wallet"]
 node_voter -->|"opens app"| node_homepage
 node_homepage -->|"navigates"| node_router
 node_router -->|"routes /app"| node_voting_ui
+
 node_voting_ui -->|"requests accounts"| node_wallet
 node_voting_ui -->|"creates provider"| node_ethers_client
 node_voting_ui -->|"loads ABI"| node_contract_abi
 node_voting_ui -->|"reads candidates"| node_voting_contract
 node_voting_ui -->|"submits vote"| node_voting_contract
 node_voting_ui -->|"sets results"| node_candidate_state
+
 node_candidate_state -->|"renders totals"| node_voting_ui
+
 node_voting_ui -.->|"toggles theme"| node_presentation
 node_presentation -.->|"animates background"| node_homepage
+
 node_ethers_client -->|"uses wallet provider"| node_wallet
 node_ethers_client -->|"sends RPC"| node_network_provider
+
 node_voting_contract -->|"serves reads"| node_candidate_queries
 node_voting_contract -->|"processes votes"| node_vote_processing
+
 node_candidate_queries -->|"reads state"| node_evm_ledger
 node_vote_processing -->|"writes vote"| node_evm_ledger
 node_network_provider -->|"connects chain"| node_evm_ledger
+
 node_voting_contract -->|"returns candidates"| node_voting_ui
 
 click node_homepage "https://github.com/shaikyasirahmed07/online-voting-system-using-blockchain/blob/main/client/src/Homepage.jsx"
@@ -64,45 +96,203 @@ click node_voting_contract "https://github.com/shaikyasirahmed07/online-voting-s
 click node_candidate_queries "https://github.com/shaikyasirahmed07/online-voting-system-using-blockchain/blob/main/contracts/Voting.sol"
 click node_vote_processing "https://github.com/shaikyasirahmed07/online-voting-system-using-blockchain/blob/main/contracts/Voting.sol"
 
-classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
 classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
 classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
 classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
 classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
 classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
-classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
 
 class node_homepage,node_router,node_voting_ui,node_presentation toneBlue
 class node_ethers_client,node_contract_abi,node_candidate_state toneAmber
 class node_voting_contract,node_candidate_queries,node_vote_processing toneMint
 class node_evm_ledger,node_network_provider toneRose
 class node_voter,node_wallet toneIndigo
+```
 
+## 📁 Project Structure
 
-### 2. Important: remove the outer code fence
+```text
+online-voting-system-using-blockchain/
+│
+├── client/
+│   └── src/
+│       ├── App.jsx
+│       ├── Homepage.jsx
+│       ├── main.jsx
+│       └── artifacts/
+│           └── contracts/
+│               └── Voting.sol/
+│                   └── Voting.json
+│
+├── contracts/
+│   └── Voting.sol
+│
+├── ignition/
+│   └── modules/
+│
+├── test/
+│
+├── hardhat.config.js
+├── package.json
+└── README.md
+```
 
-When putting it into your actual `README.md`, you need **exactly one** opening and closing fence around the Mermaid diagram:
+## ⚙️ Installation
 
-```markdown
-```mermaid
-flowchart TD
-...
+Clone the repository:
 
+```bash
+git clone https://github.com/shaikyasirahmed07/online-voting-system-using-blockchain.git
+```
 
+Navigate to the project:
 
+```bash
+cd online-voting-system-using-blockchain
+```
 
-Don't put the Mermaid block inside another ` ```markdown ` block in the actual README.
+Install dependencies:
 
-### 3. GitHub will render it automatically
+```bash
+npm install
+```
 
-Because GitHub supports Mermaid diagrams in Markdown, after you commit and push the README, GitHub should render the flowchart rather than showing the Mermaid source.
+## 🧪 Hardhat Commands
 
-You can also put a nice heading above it:
+### Compile the Smart Contract
 
-```markdown
-## 🏗️ System Architecture
+```bash
+npx hardhat compile
+```
 
-This diagram illustrates how the voter interacts with the frontend, MetaMask, the Web3 client, the Solidity voting contract, and the blockchain network.
+### Run Tests
 
-```mermaid
-...
+```bash
+npx hardhat test
+```
+
+### Run Tests with Gas Report
+
+```bash
+REPORT_GAS=true npx hardhat test
+```
+
+### Start Local Blockchain
+
+```bash
+npx hardhat node
+```
+
+### Deploy Smart Contract
+
+```bash
+npx hardhat ignition deploy ./ignition/modules/Lock.js
+```
+
+## 🔄 Application Workflow
+
+```text
+Voter
+  │
+  ▼
+Homepage
+  │
+  ▼
+Voting Screen
+  │
+  ▼
+MetaMask Wallet
+  │
+  ▼
+Ethers.js
+  │
+  ▼
+Voting Smart Contract
+  │
+  ▼
+EVM Blockchain
+  │
+  ▼
+Vote Stored
+  │
+  ▼
+Updated Candidate Results
+  │
+  ▼
+Voting Screen
+```
+
+## 🔐 Smart Contract
+
+The main voting smart contract is located at:
+
+```text
+contracts/Voting.sol
+```
+
+The smart contract handles:
+
+- Candidate management
+- Candidate information retrieval
+- Vote processing
+- Vote counting
+- Blockchain state updates
+
+## 🌐 Frontend
+
+The frontend is developed using React.js.
+
+Important files:
+
+```text
+client/src/App.jsx
+client/src/Homepage.jsx
+client/src/main.jsx
+```
+
+The frontend communicates with the blockchain through **Ethers.js** and the user's **MetaMask wallet**.
+
+## 🦊 MetaMask
+
+MetaMask is used as the user's blockchain wallet.
+
+The basic interaction flow is:
+
+```text
+React Application
+       │
+       ▼
+   MetaMask
+       │
+       ▼
+   Ethers.js
+       │
+       ▼
+Voting Smart Contract
+       │
+       ▼
+ Ethereum / EVM Network
+```
+
+## 📊 Voting Process
+
+1. The voter opens the application.
+2. The voter navigates to the voting screen.
+3. MetaMask is connected.
+4. The application creates an Ethers.js provider.
+5. Candidate information is retrieved from the smart contract.
+6. The voter selects a candidate.
+7. MetaMask requests transaction confirmation.
+8. The vote is submitted to the smart contract.
+9. The smart contract updates the vote count.
+10. The updated results are displayed in the frontend.
+
+## 📜 License
+
+This project is created for educational and demonstration purposes.
+
+## 👨‍💻 Author
+
+**Shaik Yasir Ahmed**
+
+GitHub: https://github.com/shaikyasirahmed07
